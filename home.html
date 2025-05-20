@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home - Mototrace</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      background: white;
+      font-weight: 600;
+      gap: 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #000;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #007bff;
+    }
+
+    .page-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 80px);
+      padding: 0 20px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+    }
+
+    .gallery a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .gallery-item {
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .gallery-item img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      background: #007bff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item p {
+      margin-top: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 15px;
+      }
+
+      .gallery {
+        gap: 20px;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        max-width: 180px;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="bikes.html">Bikes</a>
+    <a href="threewheels.html">Threewheels</a>
+    <a href="cars.html">Cars</a>
+    <a href="minitruck.html">Mini Truck</a>
+    <a href="about.html">About Us</a>
+  </div>
+
+  <div class="page-content">
+    <div class="gallery">
+      <a href="bikes.html" class="gallery-item">
+        <img src="assets/R.png" alt="Bike">
+        <p>Bikes</p>
+      </a>
+      <a href="threewheels.html" class="gallery-item">
+        <img src="assets/R (1) 2.png" alt="Threewheel">
+        <p>Threewheel</p>
+      </a>
+      <a href="cars.html" class="gallery-item">
+        <img src="assets/3d-car-with-simple-background_23-2150796854-removebg-preview.png" alt="Car">
+        <p>Cars</p>
+      </a>
+      <a href="minitruck.html" class="gallery-item">
+        <img src="assets/BUP_DFT_DFT-10-04-removebg-preview.png" alt="Mini Truck">
+        <p>Mini Truck</p>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

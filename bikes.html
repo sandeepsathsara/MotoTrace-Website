@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bikes - MotoTrace</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+
+    .navbar a:hover {
+      background: linear-gradient(135deg, #6a5acd, #836fff);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(106, 90, 205, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 100px;
+      font-size: 32px;
+      color: #333;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 10px;
+      margin: 20px auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: #f5f1ff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    th {
+      background: #bdaaf1;
+      color: #333;
+    }
+
+    tr:nth-child(even) td {
+      background: #ede6ff;
+    }
+
+    tr:hover td {
+      background: #e0d6ff;
+    }
+
+    #rentalTable {
+      display: none;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="bikes.html">Bikes</a>
+    <a href="threewheels.html">Threewheels</a>
+    <a href="cars.html">Cars</a>
+    <a href="minitruck.html">Mini Truck</a>
+   
+  </div>
+
+  <h1>Select a Bike Model</h1>
+  <select id="bikeSelect">
+    <option value="">-- Select Bike --</option>
+  </select>
+
+  <table id="bikeTable" style="display: none;">
+    <thead>
+      <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <script>
+          for (let year = 2005; year <= 2020; year++) {
+            document.write(`<th>${year}</th>`);
+          }
+        </script>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <table id="rentalTable">
+    <thead>
+      <tr>
+        <th>Plan</th>
+        <th>Monthly Payment (LKR)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const bikeData = [
+      {
+        make: "YAMAHA",
+        mode: "FZ",
+        prices: {
+          2010: 350000, 2012: 420000, 2014: 470000, 2016: 530000, 2018: 590000, 2020: 640000
+        }
+      },
+      {
+        make: "HONDA",
+        mode: "CBR",
+        prices: {
+          2009: 400000, 2011: 460000, 2013: 520000, 2015: 580000, 2017: 630000, 2019: 680000
+        }
+      }
+    ];
+
+    const select = document.getElementById('bikeSelect');
+    const table = document.getElementById('bikeTable');
+    const tbody = table.querySelector('tbody');
+    const rentalTable = document.getElementById('rentalTable');
+    const rentalBody = rentalTable.querySelector('tbody');
+
+    bikeData.forEach(bike => {
+      const option = document.createElement('option');
+      option.value = bike.mode;
+      option.textContent = `${bike.make} - ${bike.mode}`;
+      select.appendChild(option);
+    });
+
+    select.addEventListener('change', () => {
+      const selected = select.value;
+      tbody.innerHTML = '';
+      rentalTable.style.display = 'none';
+      rentalBody.innerHTML = '';
+
+      if (!selected) {
+        table.style.display = 'none';
+        return;
+      }
+
+      const bike = bikeData.find(b => b.mode === selected);
+      if (bike) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${bike.make}</td><td>${bike.mode}</td>`;
+        for (let year = 2005; year <= 2020; year++) {
+          const price = bike.prices[year];
+          const cell = document.createElement('td');
+          if (price) {
+            cell.textContent = price.toLocaleString();
+            cell.addEventListener('click', () => {
+              showRentalOptions(price);
+            });
+          } else {
+            cell.textContent = '-';
+          }
+          row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+        table.style.display = 'table';
+      }
+    });
+
+    function showRentalOptions(price) {
+      const plans = [12, 24, 36];
+      rentalBody.innerHTML = '';
+      plans.forEach(months => {
+        const monthly = Math.round(price / months);
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${months} Months</td><td>${monthly.toLocaleString()}</td>`;
+        rentalBody.appendChild(row);
+      });
+      rentalTable.style.display = 'table';
+      rentalTable.scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
+
+</body>
+</html>

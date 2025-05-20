@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GoFinance - Sign Up</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(135deg, #004aad, #00c0ff);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .left-panel h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .left-panel p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .left-panel button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      background-color: white;
+      color: #004aad;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .left-panel button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .right-panel {
+      flex: 1;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 40px;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+    .form-container p {
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .vehicles {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .vehicles img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left-panel,
+      .right-panel {
+        flex: none;
+        width: 100%;
+        height: 50vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="left-panel">
+    <h1><strong>GoFinance</strong></h1>
+    <p>The most popular peer to peer lending at SEA</p>
+    <button onclick="alert('Read more clicked!')">Read More</button>
+  </div>
+
+  <div class="right-panel">
+    <form id="registerForm" class="form-container">
+      <h2>Hello!</h2>
+      <p>Sign Up to Get Started</p>
+      <input type="text" id="username" placeholder="Full Name" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+      <div class="vehicles">
+        <img src="assets/R.png" alt="Bike" />
+        <img src="assets/R (1) 2.png" alt="Threewheel" />
+        <img src="assets/3d-car-with-simple-background_23-2150796854-removebg-preview.png" alt="Car" />
+        <img src="assets/BUP_DFT_DFT-10-04-removebg-preview.png" alt="Van" />
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        const res = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Registration successful!");
+          window.location.href = "login.html";
+        } else {
+          alert(data.message || "Registration failed.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error while registering.");
+      }
+    });
+  </script>
+</body>
+</html>
