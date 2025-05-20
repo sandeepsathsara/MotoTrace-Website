@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mototrace - Login</title>
   <style>
+    /* Your existing CSS styles unchanged */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -129,7 +130,7 @@
       <p>Welcome Back</p>
       <div class="icon-input">
         <i class="fa fa-envelope"></i>
-        <input type="text" id="username" placeholder="Username" required />
+        <input type="email" id="email" placeholder="Email" required />
       </div>
       <div class="icon-input">
         <i class="fa fa-lock"></i>
@@ -143,7 +144,7 @@
   document.getElementById("loginForm").addEventListener("submit", async function(e) {
     e.preventDefault(); // Stop default form submission
 
-    const emailOrUsername = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
     try {
@@ -153,7 +154,7 @@
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: emailOrUsername,
+          email: email,
           password: password,
         }),
       });
@@ -172,8 +173,5 @@
     }
   });
 </script>
-
-  
-
 </body>
 </html>
